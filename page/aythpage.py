@@ -15,7 +15,10 @@ class AuthPage:
     PROFILE_ICON = (By.CSS_SELECTOR, "img")
     LOGIN = "p-akimova@mail.ru"
     PASSWORD = "inCanto720"
-    PRIF = (By.XPATH, '//div[@data-testid="left-sidebar"]//div[text()="Моя компания"]')
+    PRIF = (
+        By.XPATH,
+        '//div[@data-testid="left-sidebar"]//div[text()="Моя компания"]',
+    )
 
     def __init__(self, driver):
         self.driver = driver
@@ -25,21 +28,22 @@ class AuthPage:
         """Метод переходит на страницу"""
         self.driver.get(self.URL)
 
-    def make_login(self, login = LOGIN, pas = PASSWORD) -> None:
+    def make_login(self, login=LOGIN, pas=PASSWORD) -> None:
         """Метод воодит логин и пароль"""
         self.wait.until(
-            EC.element_to_be_clickable((By.XPATH, '//input[@placeholder="example@mail.ru"]'))
+            EC.element_to_be_clickable(
+                (By.XPATH, '//input[@placeholder="example@mail.ru"]')
+            )
         ).send_keys(login)
-        self.driver.find_element(By.XPATH, '//input[@type="password"]').send_keys(pas)
+        self.driver.find_element(
+            By.XPATH, '//input[@type="password"]'
+        ).send_keys(pas)
         self.driver.find_element(By.XPATH, '//div[text()="Войти"]').click()
-    
-
 
     def is_login(self) -> bool:
-        """ Метод проверяет авторизацию"""
+        """Метод проверяет авторизацию"""
         try:
             self.wait.until(EC.presence_of_element_located(self.PRIF))
             return True
         except TimeoutException:
             return False
-        

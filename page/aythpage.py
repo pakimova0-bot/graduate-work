@@ -1,8 +1,13 @@
+import os
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.support.ui import WebDriverWait
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class AuthPage:
@@ -13,8 +18,8 @@ class AuthPage:
     PASSWORD_INPUT = (By.CSS_SELECTOR, '[type="password"]')
     LOGIN_BUTTON = (By.XPATH, "//div[text()='Войти']")
     PROFILE_ICON = (By.CSS_SELECTOR, "img")
-    LOGIN = "p-akimova@mail.ru"
-    PASSWORD = "inCanto720"
+    LOGIN = os.getenv("LOGIN")
+    PASSWORD = os.getenv("PASSWORD")
     PRIF = (
         By.XPATH,
         '//div[@data-testid="left-sidebar"]//div[text()="Моя компания"]',

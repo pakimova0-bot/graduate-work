@@ -1,18 +1,28 @@
+import os
+import pytest
+
 import requests
 import allure
+from dotenv import load_dotenv
+
+load_dotenv()
+key = os.getenv("API_KEY")
+login = os.getenv("LOGIN")
+password = os.getenv("PASSWORD")
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer 3p3pq-pzoQb03hAIbZ3zGBqHQtQkKeORQY4VWKTCPEnQ-wmyHkrZxpfiuYHeZbMr",
+    "Authorization": f"Bearer {key}",
 }
 base_url = "https://ru.yougile.com/api-v2/"
 
 
 @allure.feature("Авторизация")
 @allure.story("Успешная авторизация в системе")
+@pytest.mark.api
 def test_to_activation():
     with allure.step("Подготовка данных для авторизации"):
-        payload = {"login": "p-akimova@mail.ru", "password": "inCanto720"}
+        payload = {"login": f"{login}", "password": f"{password}"}
 
     with allure.step("Отправка запроса на авторизацию"):
         response = requests.post(
@@ -27,6 +37,7 @@ def test_to_activation():
 
 @allure.feature("Проекты")
 @allure.story("Создание нового проекта")
+@pytest.mark.api
 def test_to_create():
     with allure.step("Подготовка данных для создания проекта"):
         payload = {"title": "Знания"}
@@ -44,6 +55,7 @@ def test_to_create():
 
 @allure.feature("Проекты")
 @allure.story("Редактирование проекта")
+@pytest.mark.api
 def test_to_change():
     old_title = "Новое задание"
     new_title = "Замена задания"
